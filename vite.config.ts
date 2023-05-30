@@ -6,6 +6,7 @@ import vue from '@vitejs/plugin-vue'
 import type { Plugin } from 'vite'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import Icons from 'unplugin-icons/vite'
 
 const importPlugin = (isBuild: boolean) => {
   return <Plugin>{
@@ -52,6 +53,7 @@ export default defineConfig(({ command }) => {
         ],
         symbolId: '[name]'
       }),
+      Icons(),
       Components({
         resolvers,
         dirs: ['./src/components'],
@@ -62,6 +64,7 @@ export default defineConfig(({ command }) => {
         imports: ['vue', 'vue-router', 'pinia'],
         dirs: ['./src/api', './src/store', './src/utils'],
         dts: './src/auto-import.d.ts',
+        vueTemplate: true,
         eslintrc: {
           enabled: true, // 默认false, true启用。生成一次就可以，避免每次工程启动都生成
           filepath: './.eslintrc-auto-import.json',
