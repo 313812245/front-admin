@@ -37,9 +37,9 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
-router.afterEach(to => {
-  const app: any = document.body
-  app.className = to.path.slice(1).replace(/\//g, '-') || 'home-wrap'
-})
+// router.afterEach(to => {
+//   const app: any = document.body
+//   app.className = to.path.slice(1).replace(/\//g, '-') || 'home-wrap'
+// })
 
 export default router

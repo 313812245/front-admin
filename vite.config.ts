@@ -7,13 +7,18 @@ import type { Plugin } from 'vite'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
+
+const urlToPath = (url: string): string => {
+  return fileURLToPath(new URL(url, import.meta.url))
+}
 
 const importPlugin = (isBuild: boolean) => {
   return <Plugin>{
     name: 'importPlugin',
     transform (code, id) {
       // 判断当前处理的是否是 src/main.ts
-      const name = fileURLToPath(new URL('./src/main.ts', import.meta.url))
+      const name = urlToPath('./src/main.ts')
       const list = code.split('\n')
       if (name.replace(/\\/g, '/') === id.replace(/\\/g, '/')) {
         // 处理svg
@@ -49,25 +54,38 @@ export default defineConfig(({ command }) => {
       importPlugin(isBuild),
       createSvgIconsPlugin({
         iconDirs: [
-          fileURLToPath(new URL('./src/assets/icons', import.meta.url))
+          urlToPath('./src/assets/icons')
         ],
         symbolId: '[name]'
       }),
-      Icons(),
+      Icons({
+        autoInstall: true
+      }),
       Components({
-        resolvers,
-        dirs: ['./src/components'],
-        dts: './src/components.d.ts'
+        resolvers: [
+          ...resolvers,
+          IconsResolver({
+            enabledCollections: ['ep']
+          })
+        ],
+        dirs: [urlToPath('./src/components')],
+        dts: urlToPath('./src/components.d.ts')
       }),
       AutoImport({
-        resolvers,
+        resolvers: [
+          ...resolvers,
+          // 自动导入图标组件
+          IconsResolver({
+            prefix: 'Icon'
+          })
+        ],
         imports: ['vue', 'vue-router', 'pinia'],
-        dirs: ['./src/api', './src/store', './src/utils'],
-        dts: './src/auto-import.d.ts',
+        dirs: [urlToPath('./src/api'), urlToPath('./src/store'), urlToPath('./src/utils')],
+        dts: urlToPath('./src/auto-import.d.ts'),
         vueTemplate: true,
         eslintrc: {
-          enabled: true, // 默认false, true启用。生成一次就可以，避免每次工程启动都生成
-          filepath: './.eslintrc-auto-import.json',
+          enabled: false, // 默认false, true启用。生成一次就可以，避免每次工程启动都生成
+          filepath: urlToPath('./.eslintrc-auto-import.json'),
           globalsPropValue: true
         }
       })
@@ -97,7 +115,7 @@ export default defineConfig(({ command }) => {
     },
     resolve: {
       alias: {
-        '@': fileURLToPath(new URL('./src', import.meta.url))
+        '@': urlToPath('./src')
       }
     },
     server: {

@@ -1,7 +1,7 @@
 <template>
   <el-form class="pro-search" :model="formInline" inline>
-    <template v-for="{ name, prop, label, valueType, clearable = true, ...item } in list" :key="name || prop">
-      <el-form-item :label="label" v-if="valueType">
+    <template v-for="{ name, prop, label, valueType, clearable = true, ...item }, index in list" :key="name || prop">
+      <el-form-item class="search-item" :label="label" v-if="valueType && !isMore ? index < 4 : true">
         <component
           v-bind="item"
           :is="item.component"
@@ -10,6 +10,9 @@
         ></component>
       </el-form-item>
     </template>
+    <el-form-item class="search-item">
+      <el-button @click="arrowChange" type="primary" link>{{moreMap[isMore]}} <el-icon><i-ep-ArrowDown /></el-icon></el-button>
+    </el-form-item>
   </el-form>
   <el-row justify="space-between">
     <div>
@@ -24,16 +27,21 @@
 </template>
 
 <script setup lang="ts">
-
 interface Props {
   columns?: Table.Column[]
   beforeSearchSubmit?: (obj: Record<string, any>) => Record<string, any>
 }
 
+const emits = defineEmits(['onSearch'])
 const props = withDefaults(defineProps<Props>(), {
   columns: () => []
 })
 const list: any = ref([])
+const isMore = ref(false)
+const moreMap = {
+  true: '收起',
+  false: '展开'
+}
 
 const formInline = ref<Record<string, any>>({})
 
@@ -66,16 +74,20 @@ function getCurrentComponent (valueType) {
   ))
 }
 
-const emit = defineEmits<{(type, item): void }>()
 const onSubmit = () => {
   if (props.beforeSearchSubmit && typeof props.beforeSearchSubmit === 'function') {
     formInline.value = props.beforeSearchSubmit(formInline.value)
   }
-  emit('onSubmit', formInline.value)
+  emits('onSearch', formInline.value)
 }
 
 const onReset = () => {
   resetObject(formInline.value)
+  onSubmit()
+}
+
+const arrowChange = () => {
+  isMore.value = !isMore.value
 }
 </script>
 <script lang="ts">
@@ -93,5 +105,8 @@ export default {
   }
   .el-row:last-child {
     margin-bottom: 0;
+  }
+  .search-item{
+    min-width: 254px;
   }
 </style>

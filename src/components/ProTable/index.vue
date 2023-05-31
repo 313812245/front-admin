@@ -1,65 +1,79 @@
 <template>
-  <pro-search :columns="columns" @onSubmit="onSearch">
-    <template #buttonLeft>
-      <slot name="buttonLeft"></slot>
-    </template>
-    <template #buttonRight>
-      <slot name="buttonRight"></slot>
-    </template>
-  </pro-search>
-  <el-table
-    :data="tableData"
-    v-bind="$attrs"
-    ref="table"
-    style="width: 100%"
-    :border="true"
-  >
-    <template v-for="(value, name) in $slots" #[name]="slotData">
-      <slot
-        v-if="['empty', 'header', 'append'].includes(name)"
-        :name="name"
-        v-bind="slotData || {}"
-      ></slot>
-    </template>
-    <template v-if="!('empty' in $slots)" v-slot:empty>
-      <template v-if="isLoading">
-        <span>
-          <i class="el-icon-loading"></i>
-          数据正在疯狂加载中...
-        </span>
+  <el-container class="table-layout">
+    <pro-search :columns="columns" @onSearch="onSearch">
+      <template #buttonLeft>
+        <slot name="buttonLeft"></slot>
       </template>
-      <template v-else>暂无数据</template>
-    </template>
-    <template
-      v-for="(
-        { name, prop, type, align = 'center', ...item }, index
-      ) in columns"
-    >
-      <el-table-column
-        v-if="['index', 'selection', 'expand'].includes(type)"
-        :key="type"
-        :align="align"
-        :type="type"
-        v-bind="item"
-      />
-      <el-table-column
-        v-else
-        :key="name || prop || index"
-        :prop="name || prop"
-        :align="align"
-        v-bind="item"
+      <template #buttonRight>
+        <slot name="buttonRight"></slot>
+      </template>
+    </pro-search>
+    <el-main>
+      <el-table
+        :data="tableData"
+        max-height="100%"
+        v-bind="$attrs"
+        ref="table"
+        style="width: 100%;"
+        :border="true"
       >
-        <template v-slot="scope">
-          <span
-            @click.stop="clickFun(item.clickEvent, scope.row)"
-            :class="{ link: !!item.clickEvent }"
-          >
-            {{ renderText(scope.row, {name, prop, ...item}) }}
-          </span>
+        <template v-for="(value, name) in $slots" #[name]="slotData">
+          <slot
+            v-if="['empty', 'header', 'append'].includes(name)"
+            :name="name"
+            v-bind="slotData || {}"
+          ></slot>
         </template>
-      </el-table-column>
-    </template>
-  </el-table>
+        <template v-if="!('empty' in $slots)" v-slot:empty>
+          <template v-if="isLoading">
+            <span>
+              <i class="el-icon-loading"></i>
+              数据正在疯狂加载中...
+            </span>
+          </template>
+          <template v-else>暂无数据</template>
+        </template>
+        <template
+          v-for="(
+            { name, prop, type, align = 'center', ...item }, index
+          ) in columns"
+        >
+          <el-table-column
+            v-if="['index', 'selection', 'expand'].includes(type)"
+            :key="type"
+            :align="align"
+            :type="type"
+            v-bind="item"
+          />
+          <el-table-column
+            v-else
+            :key="name || prop || index"
+            :prop="name || prop"
+            :align="align"
+            v-bind="item"
+          >
+            <template v-slot="scope">
+              <span
+                @click.stop="clickFun(item.clickEvent, scope.row)"
+                :class="{ link: !!item.clickEvent }"
+              >
+                {{ renderText(scope.row, {name, prop, ...item}) }}
+              </span>
+            </template>
+          </el-table-column>
+        </template>
+      </el-table>
+    </el-main>
+    <el-footer class="table-footer">
+      <el-pagination
+        small
+        background
+        layout="prev, pager, next"
+        :total="50"
+        class="mt-4"
+      />
+    </el-footer>
+  </el-container>
 </template>
 
 <script setup lang="ts">
@@ -86,12 +100,12 @@ defineExpose({
   clearSelection
 })
 
-const emit = defineEmits<{(type, item): void }>()
+const emits = defineEmits<{(type, item): void }>()
 const clickFun = (type, item) => {
   if (typeof type === 'function') {
     type(item)
   } else if (type) {
-    emit(type, item)
+    emits(type, item)
   }
 }
 
@@ -116,8 +130,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .link{
-    cursor: pointer;
-    color: var(--el-color-primary);
+.table-layout{
+  width: 100%;
+  height: 100%;
+  :deep(.pro-search){
+    padding: var(--el-main-padding);
   }
+  :deep(.el-row){
+    padding: 0 var(--el-main-padding);
+  }
+  :deep(.el-table){
+    display: flex;
+  }
+  :deep(.el-table__inner-wrapper){
+    flex: 1;
+    height: auto !important;
+  }
+  :deep(.el-scrollbar__wrap){
+    max-height: 100% !important;
+  }
+  .el-pagination{
+    justify-content: flex-end;
+  }
+
+  .table-footer{
+    border-top: solid 1px var(--el-menu-border-color);
+
+    .el-pagination {
+      justify-content: flex-end;
+      height: 100%;
+    }
+  }
+}
+.link{
+  cursor: pointer;
+  color: var(--el-color-primary);
+}
 </style>

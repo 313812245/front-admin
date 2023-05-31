@@ -17,6 +17,6 @@ export default {
   .layout-header{
     width: 100%;
     height: 100%;
-    background: #324057;
+    /* background: #324057; */
   }
 </style>

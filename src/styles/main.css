@@ -29,6 +29,10 @@ html, body, #app {
   float: right;
 }
 
+.layout{
+  height: 100%;
+}
+
 .clearfix:after {
   content: ".";
   display: block;

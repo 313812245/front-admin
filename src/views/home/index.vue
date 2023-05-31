@@ -1,5 +1,5 @@
 <template>
-  <div class="home-wrap">
+  <div class="home-wrap layout">
     <ProTable
       ref="tableRef"
       :columns="columns"
@@ -34,6 +34,26 @@ const columns: Table.Column[] = [
     valueType: 'input'
   },
   {
+    name: 'test1',
+    label: '测试1',
+    valueType: 'input'
+  },
+  {
+    name: 'test2',
+    label: '测试测试2',
+    valueType: 'input'
+  },
+  {
+    name: 'test3',
+    label: '测试3',
+    valueType: 'input'
+  },
+  {
+    name: 'test4',
+    label: '测试4',
+    valueType: 'input'
+  },
+  {
     name: 'status',
     label: '状态',
     valueType: 'select',
@@ -53,16 +73,12 @@ const columns: Table.Column[] = [
   }
 ]
 
-const data = [
-  {
-    name: '测试1',
-    status: 1
-  },
-  {
-    name: '测试2',
-    status: 2
-  }
-]
+const data = Array.from({
+  length: 20
+}).fill({
+  name: '测试1',
+  status: 1
+})
 const nameClick = (item) => {
   console.log(item, tableRef, '=====nameClick');
 }
