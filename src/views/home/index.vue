@@ -6,7 +6,7 @@
       :data="data"
       @nameClick="nameClick"
     >
-      <template #searchLeft>
+      <template #buttonLeft>
         <el-button type="success">新建</el-button>
       </template>
     </ProTable>
@@ -33,26 +33,26 @@ const columns: Table.Column[] = [
     clickEvent: 'nameClick',
     valueType: 'input'
   },
-  {
-    name: 'test1',
-    label: '测试1',
-    valueType: 'input'
-  },
-  {
-    name: 'test2',
-    label: '测试测试2',
-    valueType: 'input'
-  },
-  {
-    name: 'test3',
-    label: '测试3',
-    valueType: 'input'
-  },
-  {
-    name: 'test4',
-    label: '测试4',
-    valueType: 'input'
-  },
+  // {
+  //   name: 'test1',
+  //   label: '测试1',
+  //   valueType: 'input'
+  // },
+  // {
+  //   name: 'test2',
+  //   label: '测试测试2',
+  //   valueType: 'input'
+  // },
+  // {
+  //   name: 'test3',
+  //   label: '测试3',
+  //   valueType: 'input'
+  // },
+  // {
+  //   name: 'test4',
+  //   label: '测试4',
+  //   valueType: 'input'
+  // },
   {
     name: 'status',
     label: '状态',

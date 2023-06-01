@@ -10,7 +10,7 @@
         ></component>
       </el-form-item>
     </template>
-    <el-form-item class="search-item">
+    <el-form-item class="search-item" v-if="list.length > 4">
       <el-button @click="arrowChange" type="primary" link>{{moreMap[isMore]}} <el-icon><i-ep-ArrowDown /></el-icon></el-button>
     </el-form-item>
   </el-form>
@@ -101,7 +101,7 @@ export default {
     color: var(--el-color-primary);
   }
   .el-row {
-    margin-bottom: 10px;
+    // margin-bottom: 10px;
   }
   .el-row:last-child {
     margin-bottom: 0;

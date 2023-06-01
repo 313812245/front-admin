@@ -135,6 +135,7 @@ export default {
   height: 100%;
   :deep(.pro-search){
     padding: var(--el-main-padding);
+    padding-bottom: 0;
   }
   :deep(.el-row){
     padding: 0 var(--el-main-padding);

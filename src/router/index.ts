@@ -19,12 +19,16 @@ const router = createRouter({
       children: contentRoute
     },
     {
+      path: '/login',
+      name: 'Login',
+      component: () => import('@/views/login/index.vue')
+    },
+    {
       path: '/:pathMatch(.*)',
       name: '404',
       component: () => import('@/views/404.vue'),
       meta: {
-        keepAlive: true,
-        fullScreen: true
+        keepAlive: true
       }
     }
   ]
