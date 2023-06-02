@@ -1,14 +1,16 @@
 <template>
-  <el-container class="table-layout">
-    <pro-search :columns="columns" @onSearch="onSearch">
-      <template #buttonLeft>
-        <slot name="buttonLeft"></slot>
-      </template>
-      <template #buttonRight>
-        <slot name="buttonRight"></slot>
-      </template>
-    </pro-search>
-    <el-main>
+  <Layout class="table-layout" :isLayout="isLayout">
+    <template #header>
+      <pro-search :columns="columns" @onSearch="onSearch">
+        <template #buttonLeft>
+          <slot name="buttonLeft"></slot>
+        </template>
+        <template #buttonRight>
+          <slot name="buttonRight"></slot>
+        </template>
+      </pro-search>
+    </template>
+    <template #main>
       <el-table
         :data="tableData"
         max-height="100%"
@@ -67,8 +69,8 @@
           </el-table-column>
         </template>
       </el-table>
-    </el-main>
-    <el-footer class="table-footer">
+    </template>
+    <template #footer>
       <el-pagination
         small
         background
@@ -76,21 +78,24 @@
         :total="50"
         class="mt-4"
       />
-    </el-footer>
-  </el-container>
+    </template>
+  </Layout>
 </template>
 
 <script setup lang="ts">
+import Layout from './layout.vue'
 import type { TableProps, ElTable } from 'element-plus'
 
 interface Props<T = any> extends Partial<TableProps<T>> {
   columns?: Table.Column[],
   isLoading?: boolean
+  isLayout?: boolean
 }
 
 withDefaults(defineProps<Props>(), {
   columns: () => [],
-  isLoading: false
+  isLoading: false,
+  isLayout: true
 })
 const table = ref<InstanceType<typeof ElTable> | null>()
 const tableData = ref([])

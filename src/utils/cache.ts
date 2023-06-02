@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js'
 
-const _key = 'baolian_ygcx_'
+const _key = 'front_admin_'
 const CRYPTO_SECRET = _key + '88888888' // 加密的密钥
 const isBuild = import.meta.env.PROD
 
