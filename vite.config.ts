@@ -84,7 +84,7 @@ export default defineConfig(({ command }) => {
         dts: urlToPath('./src/auto-import.d.ts'),
         vueTemplate: true,
         eslintrc: {
-          enabled: false, // 默认false, true启用。生成一次就可以，避免每次工程启动都生成
+          enabled: true, // 默认false, true启用。生成一次就可以，避免每次工程启动都生成
           filepath: urlToPath('./.eslintrc-auto-import.json'),
           globalsPropValue: true
         }
