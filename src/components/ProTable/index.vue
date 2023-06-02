@@ -53,7 +53,11 @@
             v-bind="item"
           >
             <template v-slot="scope">
+              <template v-if="type === 'slot'">
+                <slot :name="name" :item="scope.row" :index="scope.$index"></slot>
+              </template>
               <span
+                v-else
                 @click.stop="clickFun(item.clickEvent, scope.row)"
                 :class="{ link: !!item.clickEvent }"
               >
@@ -118,7 +122,8 @@ const renderText = (row, item) => {
     return item.render(row, item)
   }
   const valueMap = runFunction(item.valueEnum)
-  const value = row[item.name || item.prop]
+  const name = item.name || item.prop
+  const value = getValue<string>(row, name) || ''
   return (valueMap ? valueMap[value] : value) || '-'
 }
 </script>

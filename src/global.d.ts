@@ -10,7 +10,7 @@ type ValueEnum = ProSchemaValueEnumObj | ProSchemaValueEnumMap
 declare global {
   namespace Table {
     interface Column<T = any> extends Partial<TableColumnCtx<T>> {
-      type?: 'default' | 'index' | 'selection' | 'expand' | 'checkbox'
+      type?: 'default' | 'index' | 'selection' | 'expand' | 'slot'
       name?: string
       clickEvent?: string | ((item) => void)
       valueEnum?: any

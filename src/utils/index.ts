@@ -243,3 +243,17 @@ export function resetObject<T> (obj: T, defaultObj?: Partial<T>): T {
   }
   return obj
 }
+
+type Path = (string | number)[];
+/**
+ * 获取对象中指定路径的值
+ * @param obj - 要从中获取值的对象
+ * @param path - 表示要访问的属性路径的数组或字符串
+ * @param defaultValue - 如果无法获取到值，则返回的默认值
+ * @returns 对象中指定路径的值，如果无法获取到值，则返回默认值
+ */
+export function getValue<T> (obj: Record<string, any>, path: Path | string, defaultValue?: T): T | undefined {
+  const pathArray = typeof path === 'string' ? path.split('.') : path
+  const result = pathArray.reduce((acc, key) => acc?.[key], obj) ?? undefined
+  return result !== undefined ? (result as T) : defaultValue
+}
