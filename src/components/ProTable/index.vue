@@ -163,15 +163,6 @@ export default {
   .el-pagination{
     justify-content: flex-end;
   }
-
-  .table-footer{
-    border-top: solid 1px var(--el-menu-border-color);
-
-    .el-pagination {
-      justify-content: flex-end;
-      height: 100%;
-    }
-  }
 }
 .link{
   cursor: pointer;

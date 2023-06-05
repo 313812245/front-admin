@@ -4,7 +4,7 @@
     <el-main>
       <slot name="main"></slot>
     </el-main>
-    <el-footer>
+    <el-footer class="table-footer">
       <slot name="footer"></slot>
     </el-footer>
   </el-container>
@@ -31,4 +31,12 @@ export default {
 </script>
 <style lang="scss" scoped>
 
+.table-footer{
+  border-top: solid 1px var(--el-menu-border-color);
+
+  :deep(.el-pagination) {
+    justify-content: flex-end;
+    height: 100%;
+  }
+}
 </style>
