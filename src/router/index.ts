@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
+import progress from '@/plugins/progress'
+
 import type { RouteRecordRaw } from 'vue-router'
+console.log(progress, '=====')
 
 const contentRoute: RouteRecordRaw[] = []
 
@@ -36,14 +39,16 @@ const router = createRouter({
 
 // 总控
 router.beforeEach((to, from, next) => {
+  progress.start()
   // 滚回顶端
   window.scrollTo(0, 0)
   next()
 })
 
-// router.afterEach(to => {
-//   const app: any = document.body
-//   app.className = to.path.slice(1).replace(/\//g, '-') || 'home-wrap'
-// })
+router.afterEach(() => {
+  progress.finish()
+  // const app: any = document.body
+  // app.className = to.path.slice(1).replace(/\//g, '-') || 'home-wrap'
+})
 
 export default router

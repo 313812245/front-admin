@@ -30,6 +30,7 @@ declare module '@vue/runtime-core' {
     IEpSetting: typeof import('~icons/ep/setting')['default']
     Input: typeof import('./components/form/input.vue')['default']
     Layout: typeof import('./components/ProTable/layout.vue')['default']
+    LoadingBar: typeof import('./components/LoadingBar/index.vue')['default']
     ProSearch: typeof import('./components/ProSearch/index.vue')['default']
     ProTable: typeof import('./components/ProTable/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

@@ -4,8 +4,11 @@ import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
 <template>
   <el-config-provider :locale="zhCn">
+    <div id="circle"></div>
     <router-view></router-view>
   </el-config-provider>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

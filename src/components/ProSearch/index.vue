@@ -11,7 +11,7 @@
       </el-form-item>
     </template>
     <el-form-item class="search-item" v-if="list.length > 4">
-      <el-button @click="arrowChange" type="primary" link>{{moreMap[isMore]}} <el-icon><i-ep-ArrowDown /></el-icon></el-button>
+      <el-button @click="arrowChange" type="primary" link>{{moreMap[String(isMore)]}} <el-icon><i-ep-ArrowDown /></el-icon></el-button>
     </el-form-item>
   </el-form>
   <el-row justify="space-between">
@@ -100,9 +100,9 @@ export default {
     cursor: pointer;
     color: var(--el-color-primary);
   }
-  .el-row {
-    // margin-bottom: 10px;
-  }
+  // .el-row {
+  //   margin-bottom: 10px;
+  // }
   .el-row:last-child {
     margin-bottom: 0;
   }

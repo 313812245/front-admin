@@ -104,7 +104,7 @@ export default defineConfig(({ command }) => {
           chunkFileNames: 'js/[name].[hash].js',
           manualChunks: (id) => {
             // 提取路由路径中的页面名称作为输出文件名
-            const match = id.match(/src\/(views|components)\/(.*)\/index\.vue$/)
+            const match = id.match(/src\/(views|components|plugins)\/(.*)\/index(\.vue|\.ts)$/)
             if (match) {
               const pageName = match[2].replace(/\//g, '-')
               return `${pageName}`
