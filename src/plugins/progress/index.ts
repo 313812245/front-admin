@@ -8,6 +8,14 @@ const containerStyle = {
   right: '0',
   zIndex: '9999'
 }
+let timer
+
+function clearTimer () {
+  if (timer) {
+    clearInterval(timer)
+    timer = null
+  }
+}
 
 const progressContainer = document.createElement('div')
 Object.assign(progressContainer.style, containerStyle)
@@ -23,8 +31,10 @@ const closeProgressBar = () => {
   progressContainer.remove()
 }
 const hideProgressBar = () => {
-  percentage.show = false
-  percentage.value = 0
+  setTimeout(() => {
+    percentage.show = false
+    percentage.value = 0
+  }, 800)
 }
 
 const vnode = defineComponent({
@@ -51,28 +61,27 @@ app.mount(progressContainer)
 
 export default {
   start () {
-    return new Promise<void>((resolve) => {
-      percentage.value = 0
-      percentage.show = true
-      const timer = setInterval(() => {
-        percentage.value += Math.floor(Math.random() * 3 + 1)
-        if (percentage.value >= 95) {
-          clearInterval(timer)
-          resolve()
-        }
-      }, 100)
-    })
+    if (timer) return
+    percentage.value = 0
+    percentage.show = true
+    timer = setInterval(() => {
+      percentage.value += Math.floor(Math.random() * 3 + 1)
+      if (percentage.value >= 95) {
+        clearTimer()
+      }
+    }, 200)
   },
   finish () {
+    clearTimer()
     percentage.value = 100
-    setTimeout(() => {
-      hideProgressBar()
-    }, 800)
+    hideProgressBar()
   },
   close () {
+    clearTimer()
     hideProgressBar()
   },
   destroy () {
+    clearTimer()
     closeProgressBar()
   }
 }

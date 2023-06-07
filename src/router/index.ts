@@ -3,7 +3,6 @@ import Layout from '@/layout/index.vue'
 import progress from '@/plugins/progress'
 
 import type { RouteRecordRaw } from 'vue-router'
-console.log(progress, '=====')
 
 const contentRoute: RouteRecordRaw[] = []
 
