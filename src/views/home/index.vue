@@ -33,11 +33,12 @@ const columns: Table.Column[] = [
     clickEvent: 'nameClick',
     valueType: 'input'
   },
-  // {
-  //   name: 'test1',
-  //   label: '测试1',
-  //   valueType: 'input'
-  // },
+  {
+    name: 'test1',
+    label: '测试1',
+    valueType: 'datePicker',
+    hideInTable: true
+  },
   // {
   //   name: 'test2',
   //   label: '测试测试2',
@@ -57,6 +58,7 @@ const columns: Table.Column[] = [
     name: 'status',
     label: '状态',
     valueType: 'select',
+    defaultValue: '1',
     valueEnum: {
       1: '在线',
       2: '离线'

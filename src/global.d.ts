@@ -4,7 +4,7 @@ export {}
 
 type ProSchemaValueEnumObj = ''
 type ProSchemaValueEnumMap = ''
-type ProFieldValueType = 'select' | 'input' | 'calendar' | 'radio' | 'checkbox'
+type ProFieldValueType = 'select' | 'input' | 'calendar' | 'radio' | 'checkbox' | 'datePicker'
 type ValueEnum = ProSchemaValueEnumObj | ProSchemaValueEnumMap
 
 declare global {
@@ -17,6 +17,7 @@ declare global {
       valueType?: ProFieldValueType
       hideInSearch?: boolean
       hideInTable?: boolean
+      defaultValue?: any
       options?: {label: string, value: string | number}[]
     }
     type Option = Partial<ProSchemaValueEnumType>

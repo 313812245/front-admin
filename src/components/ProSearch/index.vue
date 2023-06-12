@@ -1,7 +1,7 @@
 <template>
-  <el-form class="pro-search" :model="formInline" inline>
+  <el-form ref="formRef" class="pro-search" :model="formInline" inline>
     <template v-for="{ name, prop, label, valueType, clearable = true, ...item }, index in list" :key="name || prop">
-      <el-form-item class="search-item" :label="label" v-if="valueType && !isMore ? index < 4 : true">
+      <el-form-item class="search-item" :label="label" :prop="name || prop" v-if="valueType && !isMore ? index < 4 : true">
         <component
           v-bind="item"
           :is="item.component"
@@ -36,6 +36,7 @@ const emits = defineEmits(['onSearch'])
 const props = withDefaults(defineProps<Props>(), {
   columns: () => []
 })
+const formRef = ref()
 const list: any = ref([])
 const isMore = ref(false)
 const moreMap = {
@@ -56,7 +57,7 @@ watch(() => props.columns, (columns) => {
     const defaultMap = {
       checkbox: []
     }
-    obj[name] = defaultMap[item.valueType] || ''
+    obj[name] = item.defaultValue || defaultMap[item.valueType] || ''
     list.value.push({
       component: getCurrentComponent(item.valueType),
       ...item
@@ -82,7 +83,8 @@ const onSubmit = () => {
 }
 
 const onReset = () => {
-  resetObject(formInline.value)
+  formRef.value.resetFields()
+  // resetObject(formInline.value)
   onSubmit()
 }
 

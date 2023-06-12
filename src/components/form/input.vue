@@ -2,7 +2,7 @@
   <el-input v-bind="$attrs">
     <template v-for="(value, name) in $slots" #[name]="slotData">
       <slot
-        v-if="['empty', 'header', 'append']"
+        v-if="['prefix', 'suffix', 'prepend', 'append'].includes(name)"
         :name="name"
         v-bind="slotData || {}"
       ></slot>
@@ -18,6 +18,6 @@ export default {
 
 <style lang="scss" scoped>
   .el-input {
-    min-width: 214px; /* 设置一个固定宽度 */
+    min-width: 214px;
   }
 </style>

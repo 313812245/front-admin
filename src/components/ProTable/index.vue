@@ -19,9 +19,8 @@
         style="width: 100%;"
         :border="true"
       >
-        <template v-for="(value, name) in $slots" #[name]="slotData">
+        <template v-for="(value, name) in tableSlots" #[name]="slotData">
           <slot
-            v-if="['empty', 'header', 'append'].includes(name)"
             :name="name"
             v-bind="slotData || {}"
           ></slot>
@@ -99,6 +98,16 @@ withDefaults(defineProps<Props>(), {
 })
 const table = ref<InstanceType<typeof ElTable> | null>()
 const tableData = ref([])
+const slots = useSlots()
+const tableSlots = computed(() => {
+  const obj = {}
+  Object.keys(slots)
+    .filter(name => ['empty', 'append'].includes(name))
+    .forEach(name => {
+      obj[name] = slots[name]
+    })
+  return obj
+})
 
 const clearSelection = () => {
   table.value?.clearSelection()
