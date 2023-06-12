@@ -1,8 +1,7 @@
 <template>
   <el-input v-bind="$attrs">
-    <template v-for="(value, name) in $slots" #[name]="slotData">
+    <template v-for="(value, name) in inputSlots" #[name]="slotData">
       <slot
-        v-if="['prefix', 'suffix', 'prepend', 'append'].includes(name)"
         :name="name"
         v-bind="slotData || {}"
       ></slot>
@@ -15,7 +14,16 @@ export default {
   name: 'ProInput'
 }
 </script>
-
+<script lang="ts" setup>
+const slots = useSlots()
+const inputSlots = computed(() => {
+  const obj = {}
+  Object.keys(slots)
+    .filter(name => ['prefix', 'suffix', 'prepend', 'append'].includes(name))
+    .map(name => slots[name])
+  return obj
+})
+</script>
 <style lang="scss" scoped>
   .el-input {
     min-width: 214px;
